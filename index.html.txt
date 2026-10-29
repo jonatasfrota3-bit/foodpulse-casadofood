@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodPulse - Ecossistema Casa do Food Marketing</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f97316',
+                        darkBg: '#0f172a',
+                        cardBg: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-darkBg text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- HEADER -->
+    <header class="bg-cardBg border-b border-slate-800 px-6 py-4 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center shadow-md shadow-orange-500/20">
+                <i class="fa-solid fa-chart-line text-white text-lg"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                    FoodPulse <span class="text-xs px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30">Casa do Food Marketing</span>
+                </h1>
+                <p class="text-xs text-slate-400">Ecossistema Completo de Gestão e Operação para Gastronomia</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sistema Ativo & Sincronizado
+            </span>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div class="flex-1 flex flex-col md:flex-row">
+        
+        <!-- SIDEBAR DE NAVEGAÇÃO -->
+        <aside class="w-full md:w-64 bg-cardBg/50 border-r border-slate-800 p-4 flex flex-col gap-2">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-1">Módulos do Sistema</p>
+            
+            <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all bg-orange-500 text-white shadow-lg shadow-orange-500/20">
+                <i class="fa-solid fa-house-chimney w-5"></i> Dashboard Geral
+            </button>
+            <button onclick="switchTab('team')" id="btn-team" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                <i class="fa-solid fa-users-gear w-5"></i> Equipa & Acessos Google <span class="text-[10px] bg-orange-500 text-white px-1.5 py-0.5 rounded-full ml-auto">Até 10</span>
+            </button>
+            <button onclick="switchTab('cloud')" id="btn-cloud" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                <i class="fa-solid fa-cloud-arrow-up w-5"></i> Repositório Nuvem & Planos
+            </button>
+            <button onclick="switchTab('cmv')" id="btn-cmv" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                <i class="fa-solid fa-calculator w-5"></i> Calculadora CMV
+            </button>
+            <button onclick="switchTab('nfe')" id="btn-nfe" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                <i class="fa-solid fa-file-invoice-dollar w-5"></i> Notas Fiscais (Entradas)
+            </button>
+            <button onclick="switchTab('kanban')" id="btn-kanban" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                <i class="fa-solid fa-clipboard-list w-5"></i> Kanban de Conteúdos
+            </button>
+            <button onclick="switchTab('ponto')" id="btn-ponto" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                <i class="fa-solid fa-fingerprint w-5"></i> Ponto Digital & Assiduidade
+            </button>
+            <button onclick="switchTab('cardapio')" id="btn-cardapio" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                <i class="fa-solid fa-utensils w-5"></i> Cardápio Web & Vendas
+            </button>
+            <button onclick="switchTab('ads')" id="btn-ads" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                <i class="fa-solid fa-bullhorn w-5"></i> Tráfego Ads & WhatsApp
+            </button>
+        </aside>
+
+        <!-- CONTEÚDO DINÂMICO -->
+        <main class="flex-1 p-6 overflow-y-auto">
+
+            <!-- TAB: DASHBOARD -->
+            <div id="tab-dashboard" class="tab-content space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-cardBg p-5 rounded-2xl border border-slate-800">
+                        <p class="text-xs text-slate-400 font-medium">Investimento Mídia (Ads)</p>
+                        <h3 class="text-2xl font-bold text-white mt-1">R$ 8.505,78</h3>
+                        <p class="text-xs text-amber-400 mt-2 flex items-center gap-1"><i class="fa-solid fa-triangle-exclamation"></i> Limite quase esgotado</p>
+                    </div>
+                    <div class="bg-cardBg p-5 rounded-2xl border border-slate-800">
+                        <p class="text-xs text-slate-400 font-medium">CTR Médio (Engajamento)</p>
+                        <h3 class="text-2xl font-bold text-emerald-400 mt-1">5,24%</h3>
+                        <p class="text-xs text-slate-500 mt-2">Excelente performance</p>
+                    </div>
+                    <div class="bg-cardBg p-5 rounded-2xl border border-slate-800">
+                        <p class="text-xs text-slate-400 font-medium">Custo por Resultado (CPA)</p>
+                        <h3 class="text-2xl font-bold text-white mt-1">R$ 0,09</h3>
+                        <p class="text-xs text-emerald-400 mt-2">Otimizado com sucesso</p>
+                    </div>
+                    <div class="bg-cardBg p-5 rounded-2xl border border-slate-800">
+                        <p class="text-xs text-slate-400 font-medium">Armazenamento Ativo</p>
+                        <h3 class="text-2xl font-bold text-orange-400 mt-1">1.8 GB / 5 GB</h3>
+                        <p class="text-xs text-slate-400 mt-2">Plano Starter Gratuito</p>
+                    </div>
+                </div>
+
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800">
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-bell text-orange-500"></i> Alertas Operacionais Críticos
+                    </h3>
+                    <div class="p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-300 text-sm flex items-start gap-3">
+                        <i class="fa-solid fa-triangle-exclamation text-lg mt-0.5"></i>
+                        <div>
+                            <strong>Atenção - Campanha Mundo do Açaí Paraense:</strong> O limite de gastos da conta de anúncios está quase esgotado (R$ 8.505,78 gastos de R$ 8.584,41). Recarregue o saldo para evitar interrupção nas entregas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: EQUIPA & ACESSOS GOOGLE -->
+            <div id="tab-team" class="tab-content hidden space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-users-gear text-orange-500"></i> Gestão de Participantes & Acessos Google</h3>
+                            <p class="text-xs text-slate-400 mt-1">Autorize até 10 colaboradores com contas Google e defina permissões específicas por área.</p>
+                        </div>
+                        <span id="team-counter" class="text-xs bg-orange-500/20 text-orange-400 border border-orange-500/30 px-3 py-1 rounded-full font-bold">1 / 10 Membros</span>
+                    </div>
+
+                    <!-- Formulário de Adição de Participante -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <input type="text" id="member-name" placeholder="Nome do Participante" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500">
+                        <input type="email" id="member-email" placeholder="E-mail Google (ex: colaborador@gmail.com)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500">
+                        <select id="member-role" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500">
+                            <option value="Tráfego Pago">Área: Tráfego Pago</option>
+                            <option value="Notas Fiscais">Área: Notas Fiscais & Entradas</option>
+                            <option value="Kanban de Conteúdos">Área: Kanban de Conteúdos</option>
+                            <option value="Acesso Total">Acesso Total (Todas as Áreas)</option>
+                        </select>
+                        <button onclick="addTeamMember()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-md shadow-orange-500/20">Autorizar Acesso</button>
+                    </div>
+
+                    <!-- Tabela de Membros Autorizados -->
+                    <div class="overflow-x-auto mt-4">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-900 text-slate-400 text-xs uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-l-xl">Participante</th>
+                                    <th class="p-3">E-mail Google</th>
+                                    <th class="p-3">Área Autorizada</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 rounded-r-xl text-right">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="team-table-body" class="divide-y divide-slate-800 text-slate-300">
+                                <tr class="border-b border-slate-800/50">
+                                    <td class="p-3 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-crown text-amber-400"></i> Jônatas Conceição (Líder / Owner)</td>
+                                    <td class="p-3 text-slate-400">jonatasfrota3@gmail.com</td>
+                                    <td class="p-3"><span class="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-1 rounded-full font-semibold">Administrador Master</span></td>
+                                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Ativo</span></td>
+                                    <td class="p-3 text-right text-slate-500">Master</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: REPOSITÓRIO NUVEM & PLANOS -->
+            <div id="tab-cloud" class="tab-content hidden space-y-6">
+                <div class="flex justify-between items-center bg-cardBg p-6 rounded-2xl border border-slate-800">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Repositório em Nuvem por Cliente</h3>
+                        <p class="text-xs text-slate-400 mt-1">Armazene vídeos em S-Log3/Apple Log, criativos, cardápios e relatórios com segurança.</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-sm font-bold text-orange-400">1.8 GB utilizados</span>
+                        <div class="w-32 bg-slate-800 h-2 rounded-full mt-1 overflow-hidden">
+                            <div class="bg-orange-500 h-full w-[36%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <h4 class="font-bold text-white flex items-center gap-2"><i class="fa-solid fa-folder-open text-orange-500"></i> Ficheiros do Cliente</h4>
+                        <div class="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center hover:border-orange-500/50 transition cursor-pointer" onclick="alert('Simulação: Selecione o ficheiro bruto para upload na nuvem.')">
+                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-orange-400 mb-2"></i>
+                            <p class="text-sm font-medium text-white">Arraste ficheiros ou clique para enviar</p>
+                            <p class="text-xs text-slate-500 mt-1">Vídeos 4K S-Log3, fotos de pratos, PDFs</p>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center bg-slate-900/50 p-3 rounded-xl border border-slate-800 text-sm">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-file-video text-amber-400"></i> campanha_acai_master_4k.mov</span>
+                                <span class="text-xs text-slate-400">1.2 GB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Planos & Upgrade -->
+                    <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <h4 class="font-bold text-white flex items-center gap-2"><i class="fa-solid fa-crown text-amber-400"></i> Planos de Armazenamento</h4>
+                        <div class="space-y-3">
+                            <div class="p-4 rounded-xl border border-slate-700 bg-slate-900/40">
+                                <span class="font-bold text-white text-sm">Plano Starter (Grátis)</span>
+                                <p class="text-xs text-slate-400 mt-1">5 GB de espaço seguro na nuvem.</p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-orange-500/40 bg-orange-500/5">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-white text-sm">Plano Pro (50 GB)</span>
+                                    <span class="text-orange-400 font-bold text-sm">R$ 49,90/mês</span>
+                                </div>
+                                <button onclick="alert('Redirecionando para o Mercado Pago / Stripe...')" class="w-full mt-3 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-2 rounded-lg transition shadow-md">Fazer Upgrade</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: CALCULADORA CMV -->
+            <div id="tab-cmv" class="tab-content hidden space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-calculator text-orange-500"></i> Calculadora de CMV & Ficha Técnica</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Nome do Prato</label>
+                            <input type="text" id="cmv-item" placeholder="Ex: Burger Artesanal" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Custo Insumos (R$)</label>
+                            <input type="number" id="cmv-cost" placeholder="Ex: 12.50" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">CMV Alvo (%)</label>
+                            <input type="number" id="cmv-target" value="30" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        </div>
+                    </div>
+                    <button onclick="calculateCMV()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-lg">Calcular Preço Ideal</button>
+                    <div id="cmv-result" class="hidden mt-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-sm space-y-2">
+                        <p class="text-white">Preço de Venda Sugerido: <strong id="res-price" class="text-emerald-400 text-base"></strong></p>
+                        <p class="text-slate-400">Margem de Lucro Bruta: <strong id="res-margin" class="text-white"></strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: NOTAS FISCAIS -->
+            <div id="tab-nfe" class="tab-content hidden space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-orange-500"></i> Notas Fiscais & Entradas</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="text" id="nfe-fornecedor" placeholder="Fornecedor" class="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        <input type="number" id="nfe-valor" placeholder="Valor Total (R$)" class="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        <button onclick="addNFe()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition">Registar Entrada</button>
+                    </div>
+                    <div class="overflow-x-auto mt-4">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-900 text-slate-400 text-xs uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-l-xl">Fornecedor</th>
+                                    <th class="p-3">Valor</th>
+                                    <th class="p-3 rounded-r-xl">Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="nfe-table-body" class="divide-y divide-slate-800 text-slate-300">
+                                <tr><td colspan="3" class="p-4 text-center text-slate-500">Nenhuma nota fiscal registada recentemente.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: KANBAN DE CONTEÚDOS -->
+            <div id="tab-kanban" class="tab-content hidden space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-clipboard-list text-orange-500"></i> Kanban de Produção de Conteúdo</h3>
+                    <p class="text-xs text-slate-400">Gestão de Reels, fotos (S-Log3 / Apple Log) e campanhas dos restaurantes.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-orange-400 text-sm mb-3">📸 Captação / Planeado</h4>
+                            <div class="bg-slate-800 p-3 rounded-lg text-xs text-white mb-2">Reels Bastidores Cozinha (S-Log3)</div>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-amber-400 text-sm mb-3">🎬 Em Edição (CapCut)</h4>
+                            <div class="bg-slate-800 p-3 rounded-lg text-xs text-white mb-2">Combo Duplo Promo (LUTs Custom)</div>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <h4 class="font-bold text-emerald-400 text-sm mb-3">🚀 Publicado / Tráfego</h4>
+                            <div class="bg-slate-800 p-3 rounded-lg text-xs text-white mb-2">Campanha Mundo do Açaí Paraense</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: PONTO DIGITAL -->
+            <div id="tab-ponto" class="tab-content hidden space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-fingerprint text-orange-500"></i> Ponto Digital & Assiduidade da Equipe</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="text" id="emp-name" placeholder="Nome do Colaborador" class="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        <input type="number" id="emp-faltas" placeholder="Número de Faltas no Mês" class="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        <button onclick="addEmployee()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition">Registar Colaborador</button>
+                    </div>
+                    <div id="best-employee-banner" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-award text-2xl text-emerald-400"></i>
+                            <div>
+                                <p class="text-xs uppercase font-bold tracking-wider text-emerald-400">Destaque de Assiduidade do Mês</p>
+                                <p id="best-employee-text" class="text-sm font-bold text-white"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto mt-4">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-900 text-slate-400 text-xs uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-l-xl">Colaborador</th>
+                                    <th class="p-3">Faltas no Mês</th>
+                                    <th class="p-3 rounded-r-xl">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ponto-table-body" class="divide-y divide-slate-800 text-slate-300">
+                                <tr><td colspan="3" class="p-4 text-center text-slate-500">Nenhum colaborador registado.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: CARDÁPIO WEB -->
+            <div id="tab-cardapio" class="tab-content hidden space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-utensils text-orange-500"></i> Integração Cardápio Web & Vendas</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <p class="text-xs text-slate-400">Pedidos Hoje</p>
+                            <h4 class="text-xl font-bold text-white mt-1">48 pedidos</h4>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <p class="text-xs text-slate-400">Faturamento Diário</p>
+                            <h4 class="text-xl font-bold text-emerald-400 mt-1">R$ 3.420,00</h4>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <p class="text-xs text-slate-400">Ticket Médio</p>
+                            <h4 class="text-xl font-bold text-white mt-1">R$ 71,25</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: TRÁFEGO ADS & WHATSAPP -->
+            <div id="tab-ads" class="tab-content hidden space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-bullhorn text-orange-500"></i> Relatório de Tráfego & WhatsApp</h3>
+                    <button onclick="generateWhatsAppReport()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Gerar & Copiar Relatório WhatsApp
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT DE CONTROLO -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('bg-orange-500', 'text-white', 'shadow-lg', 'shadow-orange-500/20');
+                el.classList.add('text-slate-400', 'hover:bg-slate-800/60', 'hover:text-slate-200');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('text-slate-400', 'hover:bg-slate-800/60', 'hover:text-slate-200');
+            activeBtn.classList.add('bg-orange-500', 'text-white', 'shadow-lg', 'shadow-orange-500/20');
+        }
+
+        let teamMembers = [];
+        function addTeamMember() {
+            if(teamMembers.length >= 10) {
+                alert('Limite máximo de 10 participantes atingido.');
+                return;
+            }
+            const name = document.getElementById('member-name').value;
+            const email = document.getElementById('member-email').value;
+            const role = document.getElementById('member-role').value;
+            if(!name || !email) {
+                alert('Preencha o nome e o e-mail Google do participante.');
+                return;
+            }
+            teamMembers.push({name, email, role});
+            updateTeamTable();
+            document.getElementById('member-name').value = '';
+            document.getElementById('member-email').value = '';
+        }
+        function updateTeamTable() {
+            const tbody = document.getElementById('team-table-body');
+            document.getElementById('team-counter').innerText = `${teamMembers.length + 1} / 10 Membros`;
+            
+            let html = `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-crown text-amber-400"></i> Jônatas Conceição (Líder / Owner)</td>
+                    <td class="p-3 text-slate-400">jonatasfrota3@gmail.com</td>
+                    <td class="p-3"><span class="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-1 rounded-full font-semibold">Administrador Master</span></td>
+                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Ativo</span></td>
+                    <td class="p-3 text-right text-slate-500">Master</td>
+                </tr>
+            `;
+            html += teamMembers.map((m, idx) => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white">${m.name}</td>
+                    <td class="p-3 text-slate-400">${m.email}</td>
+                    <td class="p-3"><span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full">${m.role}</span></td>
+                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Autorizado</span></td>
+                    <td class="p-3 text-right"><button onclick="removeMember(${idx})" class="text-xs text-red-400 hover:text-red-300">Remover</button></td>
+                </tr>
+            `).join('');
+            tbody.innerHTML = html;
+        }
+        function removeMember(idx) {
+            teamMembers.splice(idx, 1);
+            updateTeamTable();
+        }
+
+        function calculateCMV() {
+            const item = document.getElementById('cmv-item').value;
+            const cost = parseFloat(document.getElementById('cmv-cost').value);
+            const target = parseFloat(document.getElementById('cmv-target').value);
+            if(!item || isNaN(cost) || isNaN(target)) return;
+            const price = cost / (target / 100);
+            const margin = ((price - cost) / price) * 100;
+            document.getElementById('res-price').innerText = `R$ ${price.toFixed(2)}`;
+            document.getElementById('res-margin').innerText = `${margin.toFixed(1)}%`;
+            document.getElementById('cmv-result').classList.remove('hidden');
+        }
+
+        let nfeList = [];
+        function addNFe() {
+            const fornecedor = document.getElementById('nfe-fornecedor').value;
+            const valor = parseFloat(document.getElementById('nfe-valor').value);
+            if(!fornecedor || isNaN(valor)) return;
+            nfeList.push({fornecedor, valor, data: new Date().toLocaleDateString('pt-BR')});
+            updateNFeTable();
+            document.getElementById('nfe-fornecedor').value = '';
+            document.getElementById('nfe-valor').value = '';
+        }
+        function updateNFeTable() {
+            const tbody = document.getElementById('nfe-table-body');
+            if(nfeList.length === 0) return;
+            tbody.innerHTML = nfeList.map(n => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white">${n.fornecedor}</td>
+                    <td class="p-3 text-emerald-400">R$ ${n.valor.toFixed(2)}</td>
+                    <td class="p-3 text-slate-400">${n.data}</td>
+                </tr>
+            `).join('');
+        }
+
+        let employees = [];
+        function addEmployee() {
+            const name = document.getElementById('emp-name').value;
+            const faltas = parseInt(document.getElementById('emp-faltas').value);
+            if(!name || isNaN(faltas)) return;
+            employees.push({name, faltas});
+            employees.sort((a,b) => a.faltas - b.faltas);
+            updatePontoTable();
+            document.getElementById('emp-name').value = '';
+            document.getElementById('emp-faltas').value = '';
+        }
+        function updatePontoTable() {
+            const tbody = document.getElementById('ponto-table-body');
+            if(employees.length === 0) return;
+            tbody.innerHTML = employees.map((e, index) => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white flex items-center gap-2">
+                        ${index === 0 ? '<i class="fa-solid fa-medal text-amber-400"></i>' : ''} ${e.name}
+                    </td>
+                    <td class="p-3">${e.faltas} falta(s)</td>
+                    <td class="p-3"><span class="text-xs px-2.5 py-1 rounded-full ${e.faltas === 0 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-400'}">${e.faltas === 0 ? 'Assiduidade Perfeita' : 'Regular'}</span></td>
+                </tr>
+            `).join('');
+            const best = employees[0];
+            document.getElementById('best-employee-text').innerText = `${best.name} lidera a assiduidade com apenas ${best.faltas} falta(s) no mês!`;
+            document.getElementById('best-employee-banner').classList.remove('hidden');
+        }
+
+        function generateWhatsAppReport() {
+            const texto = `*RELATÓRIO DE TRÁFEGO - CASA DO FOOD MARKETING*%0A%0ACampanha concluída com sucesso! Desempenho excepcional em engajamento com CTR de *5,24%* e custo por resultado de *R$ 0,09*.%0A%0A_Atenção: Limite de orçamento quase esgotado (R$ 8.505,78 gastos)._`;
+            window.open(`https://api.whatsapp.com/send?text=${texto}`, '_blank');
+        }
+    </script>
+</body>
+</html>
