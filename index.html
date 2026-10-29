@@ -22,9 +22,6 @@
     </script>
     <!-- FontAwesome para Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .tab-content { display: none; }
-    </style>
 </head>
 <body class="bg-darkBg text-slate-100 min-h-screen flex flex-col font-sans">
 
@@ -126,7 +123,7 @@
             </div>
 
             <!-- TAB: EQUIPA & ACESSOS GOOGLE -->
-            <div id="tab-team" class="tab-content space-y-6">
+            <div id="tab-team" class="tab-content" style="display: none;">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
                     <div class="flex justify-between items-center">
                         <div>
@@ -176,7 +173,7 @@
             </div>
 
             <!-- TAB: PLANOS & PAGAMENTOS -->
-            <div id="tab-plans" class="tab-content space-y-6">
+            <div id="tab-plans" class="tab-content" style="display: none;">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
                     <div>
                         <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-crown text-amber-400"></i> Planos de Assinatura & Recebimento Direto</h3>
@@ -224,7 +221,7 @@
             </div>
 
             <!-- TAB: CALCULADORA CMV -->
-            <div id="tab-cmv" class="tab-content space-y-6">
+            <div id="tab-cmv" class="tab-content" style="display: none;">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-calculator text-orange-500"></i> Calculadora de CMV & Ficha Técnica</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -250,7 +247,7 @@
             </div>
 
             <!-- TAB: NOTAS FISCAIS & GOOGLE DRIVE -->
-            <div id="tab-nfe" class="tab-content space-y-6">
+            <div id="tab-nfe" class="tab-content" style="display: none;">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
@@ -286,7 +283,7 @@
             </div>
 
             <!-- TAB: KANBAN DE CONTEÚDOS -->
-            <div id="tab-kanban" class="tab-content space-y-6">
+            <div id="tab-kanban" class="tab-content" style="display: none;">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
                     <div>
                         <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-clipboard-list text-orange-500"></i> Kanban de Produção de Conteúdo</h3>
@@ -352,7 +349,7 @@
             </div>
 
             <!-- TAB: PONTO DIGITAL -->
-            <div id="tab-ponto" class="tab-content space-y-6">
+            <div id="tab-ponto" class="tab-content" style="display: none;">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-fingerprint text-orange-500"></i> Ponto Digital & Assiduidade da Equipe</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -386,10 +383,26 @@
                 </div>
             </div>
 
-            <!-- TAB: CARDÁPIO WEB -->
-            <div id="tab-cardapio" class="tab-content space-y-6">
-                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
-                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-utensils text-orange-500"></i> Integração Cardápio Web & Vendas</h3>
+            <!-- TAB: CARDÁPIO WEB & VENDAS (COM BOTÃO DE API/PIXEL) -->
+            <div id="tab-cardapio" class="tab-content" style="display: none;">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-utensils text-orange-500"></i> Integração Cardápio Web & Vendas</h3>
+                        <p class="text-xs text-slate-400 mt-1">Monitorize o volume de pedidos, faturamento e configure o rastreamento via API/Pixel.</p>
+                    </div>
+
+                    <!-- BOTAO/INPUT DE API DE RASTREIO DE VENDAS -->
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 space-y-4">
+                        <h4 class="font-bold text-white text-sm flex items-center gap-2"><i class="fa-solid fa-code text-orange-400"></i> Código API / Pixel de Rastreamento de Vendas</h4>
+                        <p class="text-xs text-slate-400">Insira a chave do Pixel ou Token de API para rastrear todas as conversões e vendas no Cardápio Web em tempo real.</p>
+                        
+                        <div class="flex flex-col md:flex-row gap-3">
+                            <input type="text" id="api-pixel-input" placeholder="Ex: PIXEL_META_123456789 ou Token API Cardápio Web" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500">
+                            <button onclick="savePixelApi()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-md">Salvar & Ativar API Rastreio</button>
+                        </div>
+                        <p id="pixel-status" class="text-xs text-emerald-400 hidden"><i class="fa-solid fa-check-circle mr-1"></i> API de Rastreio de Vendas ativada com sucesso no Cardápio Web!</p>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
                             <p class="text-xs text-slate-400">Pedidos Hoje</p>
@@ -408,7 +421,7 @@
             </div>
 
             <!-- TAB: TRÁFEGO ADS & WHATSAPP -->
-            <div id="tab-ads" class="tab-content space-y-6">
+            <div id="tab-ads" class="tab-content" style="display: none;">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
                     <div>
                         <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-bullhorn text-orange-500"></i> Relatório de Tráfego, IA & WhatsApp</h3>
@@ -491,6 +504,16 @@
         // AGENTE IA META ADS
         function openMetaAI() {
             window.open('https://adsmanager.facebook.com/', '_blank');
+        }
+
+        // SALVAR API / PIXEL DE RASTREIO NO CARDÁPIO WEB
+        function savePixelApi() {
+            const val = document.getElementById('api-pixel-input').value;
+            if(!val) {
+                alert('Insira o código da API ou Pixel de rastreamento.');
+                return;
+            }
+            document.getElementById('pixel-status').classList.remove('hidden');
         }
 
         // RELATÓRIO WHATSAPP
@@ -610,7 +633,7 @@
                     <td class="p-3 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-crown text-amber-400"></i> Jônatas Conceição (Líder / Owner)</td>
                     <td class="p-3 text-slate-400">jonatasfrota3@gmail.com</td>
                     <td class="p-3"><span class="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-1 rounded-full font-semibold">Administrador Master</span></td>
-                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Enviado</span></td>
+                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Ativo</span></td>
                     <td class="p-3 text-right text-slate-500">Master</td>
                 </tr>
             `;
