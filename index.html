@@ -22,6 +22,9 @@
     </script>
     <!-- FontAwesome para Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tab-content { display: none; }
+    </style>
 </head>
 <body class="bg-darkBg text-slate-100 min-h-screen flex flex-col font-sans">
 
@@ -123,7 +126,7 @@
             </div>
 
             <!-- TAB: EQUIPA & ACESSOS GOOGLE -->
-            <div id="tab-team" class="tab-content" style="display: none;">
+            <div id="tab-team" class="tab-content space-y-6">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
                     <div class="flex justify-between items-center">
                         <div>
@@ -173,7 +176,7 @@
             </div>
 
             <!-- TAB: PLANOS & PAGAMENTOS -->
-            <div id="tab-plans" class="tab-content" style="display: none;">
+            <div id="tab-plans" class="tab-content space-y-6">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
                     <div>
                         <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-crown text-amber-400"></i> Planos de Assinatura & Recebimento Direto</h3>
@@ -191,4 +194,506 @@
                         </div>
 
                         <div class="bg-slate-900/60 p-6 rounded-2xl border border-orange-500/40 relative flex flex-col justify-between shadow-lg shadow-orange-500/5">
-                            <span class="absolute -top-3 right-6 bg-orange-500 text-white
+                            <span class="absolute -top-3 right-6 bg-orange-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Mais Popular</span>
+                            <div>
+                                <span class="text-xs uppercase font-bold text-orange-400 tracking-wider">Mensal</span>
+                                <h4 class="text-xl font-bold text-white mt-1">Plano Pro (50 GB)</h4>
+                                <div class="mt-2 flex items-baseline gap-1">
+                                    <span class="text-2xl font-extrabold text-white">R$ 49,90</span>
+                                    <span class="text-xs text-slate-400">/mês</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2">Ideal para operações de delivery e restaurantes em crescimento.</p>
+                            </div>
+                            <button onclick="checkoutPro()" class="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md shadow-orange-500/20">Assinar Plano Pro</button>
+                        </div>
+
+                        <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs uppercase font-bold text-amber-400 tracking-wider">Corporativo</span>
+                                <h4 class="text-xl font-bold text-white mt-1">Plano Enterprise</h4>
+                                <div class="mt-2 flex items-baseline gap-1">
+                                    <span class="text-2xl font-extrabold text-white">R$ 149,90</span>
+                                    <span class="text-xs text-slate-400">/mês</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-2">Franquias e redes com alto volume de notas e equipas.</p>
+                            </div>
+                            <button onclick="checkoutEnterprise()" class="w-full mt-6 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold py-2.5 rounded-xl transition">Contratar Enterprise</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: CALCULADORA CMV -->
+            <div id="tab-cmv" class="tab-content space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-calculator text-orange-500"></i> Calculadora de CMV & Ficha Técnica</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Nome do Prato</label>
+                            <input type="text" id="cmv-item" placeholder="Ex: Burger Artesanal" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Custo Insumos (R$)</label>
+                            <input type="number" id="cmv-cost" placeholder="Ex: 12.50" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">CMV Alvo (%)</label>
+                            <input type="number" id="cmv-target" value="30" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        </div>
+                    </div>
+                    <button onclick="calculateCMV()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-lg">Calcular Preço Ideal</button>
+                    <div id="cmv-result" class="hidden mt-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-sm space-y-2">
+                        <p class="text-white">Preço de Venda Sugerido: <strong id="res-price" class="text-emerald-400 text-base"></strong></p>
+                        <p class="text-slate-400">Margem de Lucro Bruta: <strong id="res-margin" class="text-white"></strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: NOTAS FISCAIS & GOOGLE DRIVE -->
+            <div id="tab-nfe" class="tab-content space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-orange-500"></i> Gestão de Notas Fiscais (Apenas Entradas)</h3>
+                            <p class="text-xs text-slate-400 mt-1">Registe as notas fiscais e envie os documentos diretamente para a pasta na nuvem.</p>
+                        </div>
+                        <button onclick="openGoogleDrive()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition flex items-center gap-2 shadow-md">
+                            <i class="fa-brands fa-google-drive text-base"></i> Aceder Pasta Google Drive (Upload)
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <input type="text" id="nfe-fornecedor" placeholder="Fornecedor (Ex: Distribuidora)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white">
+                        <input type="number" id="nfe-valor" placeholder="Valor Total da Nota (R$)" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white">
+                        <button onclick="addNFe()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-md shadow-orange-500/20">Registar Nota Fiscal</button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-900 text-slate-400 text-xs uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-l-xl">Fornecedor</th>
+                                    <th class="p-3">Valor da Nota</th>
+                                    <th class="p-3 rounded-r-xl">Data de Registo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="nfe-table-body" class="divide-y divide-slate-800 text-slate-300">
+                                <tr><td colspan="3" class="p-4 text-center text-slate-500">Nenhuma nota fiscal registada recentemente.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: KANBAN DE CONTEÚDOS -->
+            <div id="tab-kanban" class="tab-content space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-clipboard-list text-orange-500"></i> Kanban de Produção de Conteúdo</h3>
+                        <p class="text-xs text-slate-400 mt-1">Adicione projetos, defina o dia de produção, solicitações por escrito e o momento exato em que a produção se encontra.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3 bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        <input type="text" id="kanban-title" placeholder="Nome do Vídeo" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500">
+                        <input type="text" id="kanban-date" placeholder="Dia de Produção (ex: 30/10)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500">
+                        <input type="text" id="kanban-desc" placeholder="Solicitação por Escrito" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500">
+                        <select id="kanban-status" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500">
+                            <option value="captacao">📸 Captação / Planeado</option>
+                            <option value="edicao">🎬 Em Edição (CapCut)</option>
+                            <option value="publicado">🚀 Publicado / Tráfego</option>
+                        </select>
+                        <button onclick="addKanbanCard()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-md shadow-orange-500/20">Adicionar Projeto</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 flex flex-col h-[400px]">
+                            <h4 class="font-bold text-orange-400 text-sm mb-3 flex items-center justify-between">
+                                <span>📸 Captação / Planeado</span>
+                                <span id="count-captacao" class="bg-orange-500/20 text-orange-400 text-xs px-2 py-0.5 rounded-full">1</span>
+                            </h4>
+                            <div id="col-captacao" class="flex-1 overflow-y-auto space-y-3 pr-1">
+                                <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700/60 text-xs space-y-2 shadow">
+                                    <div class="font-bold text-white text-sm">Reels Bastidores Cozinha</div>
+                                    <div class="text-slate-400"><i class="fa-regular fa-calendar mr-1"></i> Data: 29/10/2026</div>
+                                    <div class="text-slate-300 bg-slate-900/50 p-2 rounded border border-slate-800">Focar nos detalhes do S-Log3 e manuseio dos ingredientes frescos.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 flex flex-col h-[400px]">
+                            <h4 class="font-bold text-amber-400 text-sm mb-3 flex items-center justify-between">
+                                <span>🎬 Em Edição (CapCut)</span>
+                                <span id="count-edicao" class="bg-amber-500/20 text-amber-400 text-xs px-2 py-0.5 rounded-full">1</span>
+                            </h4>
+                            <div id="col-edicao" class="flex-1 overflow-y-auto space-y-3 pr-1">
+                                <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700/60 text-xs space-y-2 shadow">
+                                    <div class="font-bold text-white text-sm">Combo Duplo Promo</div>
+                                    <div class="text-slate-400"><i class="fa-regular fa-calendar mr-1"></i> Data: 28/10/2026</div>
+                                    <div class="text-slate-300 bg-slate-900/50 p-2 rounded border border-slate-800">Aplicar LUTs customizados e transições dinâmicas por keyframes.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 flex flex-col h-[400px]">
+                            <h4 class="font-bold text-emerald-400 text-sm mb-3 flex items-center justify-between">
+                                <span>🚀 Publicado / Tráfego</span>
+                                <span id="count-publicado" class="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-0.5 rounded-full">1</span>
+                            </h4>
+                            <div id="col-publicado" class="flex-1 overflow-y-auto space-y-3 pr-1">
+                                <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700/60 text-xs space-y-2 shadow">
+                                    <div class="font-bold text-white text-sm">Campanha Mundo do Açaí Paraense</div>
+                                    <div class="text-slate-400"><i class="fa-regular fa-calendar mr-1"></i> Data: 16/10/2026</div>
+                                    <div class="text-slate-300 bg-slate-900/50 p-2 rounded border border-slate-800">Criativo de conversão com CTR de 5.24%.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: PONTO DIGITAL -->
+            <div id="tab-ponto" class="tab-content space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-fingerprint text-orange-500"></i> Ponto Digital & Assiduidade da Equipe</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="text" id="emp-name" placeholder="Nome do Colaborador" class="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        <input type="number" id="emp-faltas" placeholder="Número de Faltas no Mês" class="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white">
+                        <button onclick="addEmployee()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition">Registar Colaborador</button>
+                    </div>
+                    <div id="best-employee-banner" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-award text-2xl text-emerald-400"></i>
+                            <div>
+                                <p class="text-xs uppercase font-bold tracking-wider text-emerald-400">Destaque de Assiduidade do Mês</p>
+                                <p id="best-employee-text" class="text-sm font-bold text-white"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto mt-4">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-900 text-slate-400 text-xs uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-l-xl">Colaborador</th>
+                                    <th class="p-3">Faltas no Mês</th>
+                                    <th class="p-3 rounded-r-xl">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ponto-table-body" class="divide-y divide-slate-800 text-slate-300">
+                                <tr><td colspan="3" class="p-4 text-center text-slate-500">Nenhum colaborador registado.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: CARDÁPIO WEB -->
+            <div id="tab-cardapio" class="tab-content space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-utensils text-orange-500"></i> Integração Cardápio Web & Vendas</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <p class="text-xs text-slate-400">Pedidos Hoje</p>
+                            <h4 class="text-xl font-bold text-white mt-1">48 pedidos</h4>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <p class="text-xs text-slate-400">Faturamento Diário</p>
+                            <h4 class="text-xl font-bold text-emerald-400 mt-1">R$ 3.420,00</h4>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <p class="text-xs text-slate-400">Ticket Médio</p>
+                            <h4 class="text-xl font-bold text-white mt-1">R$ 71,25</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: TRÁFEGO ADS & WHATSAPP -->
+            <div id="tab-ads" class="tab-content space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-bullhorn text-orange-500"></i> Relatório de Tráfego, IA & WhatsApp</h3>
+                        <p class="text-xs text-slate-400 mt-1">Aceda ao assistente de IA do Meta para otimização de campanhas e partilhe relatórios no WhatsApp.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Botão Agente IA Meta -->
+                        <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-4">
+                            <div>
+                                <h4 class="font-bold text-white text-sm flex items-center gap-2"><i class="fa-solid fa-robot text-orange-400"></i> Agente de IA Meta Ads</h4>
+                                <p class="text-xs text-slate-400 mt-1">Análise inteligente de criativos, públicos e desempenho de campanhas.</p>
+                            </div>
+                            <button onclick="openMetaAI()" class="w-full bg-slate-800 hover:bg-slate-700 text-orange-400 border border-orange-500/30 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Abrir Assistente de IA Meta
+                            </button>
+                        </div>
+
+                        <!-- Botão WhatsApp -->
+                        <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-4">
+                            <div>
+                                <h4 class="font-bold text-white text-sm flex items-center gap-2"><i class="fa-brands fa-whatsapp text-emerald-400"></i> Partilha via WhatsApp</h4>
+                                <p class="text-xs text-slate-400 mt-1">Gere e envie a mensagem com os resultados consolidados das campanhas.</p>
+                            </div>
+                            <button onclick="generateWhatsAppReport()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-md">
+                                <i class="fa-brands fa-whatsapp text-base"></i> Gerar & Enviar Relatório WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT DE CONTROLO ROBUSTO -->
+    <script>
+        // Inicialização: exibe apenas o Dashboard ao carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            switchTab('dashboard');
+        });
+
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(el => {
+                el.style.display = 'none';
+            });
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(el => {
+                el.classList.remove('bg-orange-500', 'text-white', 'shadow-lg', 'shadow-orange-500/20');
+                el.classList.add('text-slate-400', 'hover:bg-slate-800/60', 'hover:text-slate-200');
+            });
+
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) {
+                targetTab.style.display = 'block';
+            }
+
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-400', 'hover:bg-slate-800/60', 'hover:text-slate-200');
+                activeBtn.classList.add('bg-orange-500', 'text-white', 'shadow-lg', 'shadow-orange-500/20');
+            }
+        }
+
+        // PAGAMENTOS (MERCADO PAGO)
+        function checkoutPro() {
+            window.location.href = 'https://mpago.la/2n8DSo9'; 
+        }
+        function checkoutEnterprise() {
+            window.location.href = 'https://mpago.la/1kzZp7B'; 
+        }
+
+        // GOOGLE DRIVE DO RESPONSÁVEL
+        function openGoogleDrive() {
+            window.open('https://drive.google.com/drive/folders/SEU_ID_DE_PASTA_AQUI', '_blank');
+        }
+
+        // AGENTE IA META ADS
+        function openMetaAI() {
+            window.open('https://adsmanager.facebook.com/', '_blank');
+        }
+
+        // RELATÓRIO WHATSAPP
+        function generateWhatsAppReport() {
+            const texto = `*RELATÓRIO DE TRÁFEGO - CASA DO FOOD MARKETING*%0A%0ACampanha concluída com sucesso! Desempenho excepcional em engajamento com CTR de *5,24%* e custo por resultado de *R$ 0,09*.%0A%0A_Atenção: Limite de orçamento quase esgotado (R$ 8.505,78 gastos)._`;
+            window.open(`https://api.whatsapp.com/send?text=${texto}`, '_blank');
+        }
+
+        // KANBAN DINÂMICO
+        let kanbanCards = [
+            {title: "Reels Bastidores Cozinha", date: "29/10/2026", desc: "Focar nos detalhes do S-Log3 e manuseio dos ingredientes frescos.", status: "captacao"},
+            {title: "Combo Duplo Promo", date: "28/10/2026", desc: "Aplicar LUTs customizados e transições dinâmicas por keyframes.", status: "edicao"},
+            {title: "Campanha Mundo do Açaí Paraense", date: "16/10/2026", desc: "Criativo de conversão com CTR de 5.24%.", status: "publicado"}
+        ];
+
+        function addKanbanCard() {
+            const title = document.getElementById('kanban-title').value;
+            const date = document.getElementById('kanban-date').value;
+            const desc = document.getElementById('kanban-desc').value;
+            const status = document.getElementById('kanban-status').value;
+
+            if(!title || !date) {
+                alert('Preencha pelo menos o Nome do Vídeo e o Dia de Produção.');
+                return;
+            }
+
+            kanbanCards.push({title, date, desc, status});
+            renderKanban();
+
+            document.getElementById('kanban-title').value = '';
+            document.getElementById('kanban-date').value = '';
+            document.getElementById('kanban-desc').value = '';
+        }
+
+        function renderKanban() {
+            const colCaptacao = document.getElementById('col-captacao');
+            const colEdicao = document.getElementById('col-edicao');
+            const colPublicado = document.getElementById('col-publicado');
+
+            let htmlCaptacao = '';
+            let htmlEdicao = '';
+            let htmlPublicado = '';
+
+            let countCaptacao = 0;
+            let countEdicao = 0;
+            let countPublicado = 0;
+
+            kanbanCards.forEach((card, index) => {
+                const cardHtml = `
+                    <div class="bg-slate-800 p-3.5 rounded-xl border border-slate-700/60 text-xs space-y-2 shadow relative">
+                        <button onclick="removeKanbanCard(${index})" class="absolute top-2 right-2 text-slate-500 hover:text-red-400"><i class="fa-solid fa-trash-can"></i></button>
+                        <div class="font-bold text-white text-sm pr-4">${card.title}</div>
+                        <div class="text-slate-400"><i class="fa-regular fa-calendar mr-1"></i> Data: ${card.date}</div>
+                        ${card.desc ? `<div class="text-slate-300 bg-slate-900/50 p-2 rounded border border-slate-800">${card.desc}</div>` : ''}
+                    </div>
+                `;
+
+                if(card.status === 'captacao') {
+                    htmlCaptacao += cardHtml;
+                    countCaptacao++;
+                } else if(card.status === 'edicao') {
+                    htmlEdicao += cardHtml;
+                    countEdicao++;
+                } else if(card.status === 'publicado') {
+                    htmlPublicado += cardHtml;
+                    countPublicado++;
+                }
+            });
+
+            colCaptacao.innerHTML = htmlCaptacao || '<p class="text-slate-500 text-center py-4">Nenhum projeto aqui.</p>';
+            colEdicao.innerHTML = htmlEdicao || '<p class="text-slate-500 text-center py-4">Nenhum projeto aqui.</p>';
+            colPublicado.innerHTML = htmlPublicado || '<p class="text-slate-500 text-center py-4">Nenhum projeto aqui.</p>';
+
+            document.getElementById('count-captacao').innerText = countCaptacao;
+            document.getElementById('count-edicao').innerText = countEdicao;
+            document.getElementById('count-publicado').innerText = countPublicado;
+        }
+
+        function removeKanbanCard(index) {
+            kanbanCards.splice(index, 1);
+            renderKanban();
+        }
+
+        // GESTÃO DE EQUIPA COM NOTIFICAÇÃO POR E-MAIL
+        let teamMembers = [];
+        function addTeamMember() {
+            if(teamMembers.length >= 10) {
+                alert('Limite máximo de 10 participantes atingido.');
+                return;
+            }
+            const name = document.getElementById('member-name').value;
+            const email = document.getElementById('member-email').value;
+            const role = document.getElementById('member-role').value;
+            if(!name || !email) {
+                alert('Preencha o nome e o e-mail Google do participante.');
+                return;
+            }
+
+            teamMembers.push({name, email, role});
+            updateTeamTable();
+
+            const subject = encodeURIComponent("Acesso Autorizado - Ecossistema FoodPulse (Casa do Food Marketing)");
+            const body = encodeURIComponent(`Olá ${name},\n\nO seu acesso ao Ecossistema FoodPulse da Casa do Food Marketing foi autorizado com sucesso!\n\nÁrea Atribuída: ${role}\nE-mail Google Vinculado: ${email}\n\nPode aceder agora ao painel operacional e iniciar as suas atividades.\n\nAtenciosamente,\nJônatas Conceição - Gestão Master`);
+            
+            window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
+
+            document.getElementById('member-name').value = '';
+            document.getElementById('member-email').value = '';
+        }
+
+        function updateTeamTable() {
+            const tbody = document.getElementById('team-table-body');
+            document.getElementById('team-counter').innerText = `${teamMembers.length + 1} / 10 Membros`;
+            
+            let html = `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-crown text-amber-400"></i> Jônatas Conceição (Líder / Owner)</td>
+                    <td class="p-3 text-slate-400">jonatasfrota3@gmail.com</td>
+                    <td class="p-3"><span class="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-1 rounded-full font-semibold">Administrador Master</span></td>
+                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Enviado</span></td>
+                    <td class="p-3 text-right text-slate-500">Master</td>
+                </tr>
+            `;
+            html += teamMembers.map((m, idx) => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white">${m.name}</td>
+                    <td class="p-3 text-slate-400">${m.email}</td>
+                    <td class="p-3"><span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full">${m.role}</span></td>
+                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Notificação Enviada</span></td>
+                    <td class="p-3 text-right"><button onclick="removeMember(${idx})" class="text-xs text-red-400 hover:text-red-300">Remover</button></td>
+                </tr>
+            `).join('');
+            tbody.innerHTML = html;
+        }
+        function removeMember(idx) {
+            teamMembers.splice(idx, 1);
+            updateTeamTable();
+        }
+
+        function calculateCMV() {
+            const item = document.getElementById('cmv-item').value;
+            const cost = parseFloat(document.getElementById('cmv-cost').value);
+            const target = parseFloat(document.getElementById('cmv-target').value);
+            if(!item || isNaN(cost) || isNaN(target)) return;
+            const price = cost / (target / 100);
+            const margin = ((price - cost) / price) * 100;
+            document.getElementById('res-price').innerText = `R$ ${price.toFixed(2)}`;
+            document.getElementById('res-margin').innerText = `${margin.toFixed(1)}%`;
+            document.getElementById('cmv-result').classList.remove('hidden');
+        }
+
+        let nfeList = [];
+        function addNFe() {
+            const fornecedor = document.getElementById('nfe-fornecedor').value;
+            const valor = parseFloat(document.getElementById('nfe-valor').value);
+            if(!fornecedor || isNaN(valor)) {
+                alert('Preencha o fornecedor e o valor da nota fiscal.');
+                return;
+            }
+            nfeList.push({fornecedor, valor, data: new Date().toLocaleDateString('pt-BR')});
+            updateNFeTable();
+            document.getElementById('nfe-fornecedor').value = '';
+            document.getElementById('nfe-valor').value = '';
+        }
+        function updateNFeTable() {
+            const tbody = document.getElementById('nfe-table-body');
+            if(nfeList.length === 0) return;
+            tbody.innerHTML = nfeList.map(n => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white">${n.fornecedor}</td>
+                    <td class="p-3 text-emerald-400">R$ ${n.valor.toFixed(2)}</td>
+                    <td class="p-3 text-slate-400">${n.data}</td>
+                </tr>
+            `).join('');
+        }
+
+        let employees = [];
+        function addEmployee() {
+            const name = document.getElementById('emp-name').value;
+            const faltas = parseInt(document.getElementById('emp-faltas').value);
+            if(!name || isNaN(faltas)) return;
+            employees.push({name, faltas});
+            employees.sort((a,b) => a.faltas - b.faltas);
+            updatePontoTable();
+            document.getElementById('emp-name').value = '';
+            document.getElementById('emp-faltas').value = '';
+        }
+        function updatePontoTable() {
+            const tbody = document.getElementById('ponto-table-body');
+            if(employees.length === 0) return;
+            tbody.innerHTML = employees.map((e, index) => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white flex items-center gap-2">
+                        ${index === 0 ? '<i class="fa-solid fa-medal text-amber-400"></i>' : ''} ${e.name}
+                    </td>
+                    <td class="p-3">${e.faltas} falta(s)</td>
+                    <td class="p-3"><span class="text-xs px-2.5 py-1 rounded-full ${e.faltas === 0 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-400'}">${e.faltas === 0 ? 'Assiduidade Perfeita' : 'Regular'}</span></td>
+                </tr>
+            `).join('');
+            const best = employees[0];
+            document.getElementById('best-employee-text').innerText = `${best.name} lidera a assiduidade com apenas ${best.faltas} falta(s) no mês!`;
+            document.getElementById('best-employee-banner').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
