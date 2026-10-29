@@ -367,4 +367,187 @@
             <!-- TAB: TRÁFEGO ADS & WHATSAPP -->
             <div id="tab-ads" class="tab-content space-y-6">
                 <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-bullhorn text-orange-500"></i> Relatório de Tráfego & WhatsApp</h3>
+                    <button onclick="generateWhatsAppReport()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Gerar & Copiar Relatório WhatsApp
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT DE CONTROLO CORRIGIDO -->
+    <script>
+        function switchTab(tabId) {
+            // Oculta todas as abas
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Remove o estilo ativo de todos os botões do menu
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('bg-orange-500', 'text-white', 'shadow-lg', 'shadow-orange-500/20');
+                el.classList.add('text-slate-400', 'hover:bg-slate-800/60', 'hover:text-slate-200');
+            });
+
+            // Ativa a aba selecionada
+            const targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+
+            // Ativa o botão correspondente no menu
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-400', 'hover:bg-slate-800/60', 'hover:text-slate-200');
+                activeBtn.classList.add('bg-orange-500', 'text-white', 'shadow-lg', 'shadow-orange-500/20');
+            }
+        }
+
+        // PAGAMENTOS (MERCADO PAGO / STRIPE)
+        function checkoutPro() {
+            window.location.href = 'https://mpago.la/2SEU_LINK_PRO_AQUI'; 
+        }
+        function checkoutEnterprise() {
+            window.location.href = 'https://mpago.la/2SEU_LINK_ENTERPRISE_AQUI'; 
+        }
+
+        // BOTÃO GOOGLE DRIVE DO RESPONSÁVEL
+        function openGoogleDrive() {
+            window.open('https://drive.google.com/drive/folders/SEU_ID_DE_PASTA_AQUI', '_blank');
+        }
+
+        // GESTÃO DE EQUIPA COM DISPARO DE NOTIFICAÇÃO POR E-MAIL
+        let teamMembers = [];
+        function addTeamMember() {
+            if(teamMembers.length >= 10) {
+                alert('Limite máximo de 10 participantes atingido.');
+                return;
+            }
+            const name = document.getElementById('member-name').value;
+            const email = document.getElementById('member-email').value;
+            const role = document.getElementById('member-role').value;
+            if(!name || !email) {
+                alert('Preencha o nome e o e-mail Google do participante.');
+                return;
+            }
+
+            teamMembers.push({name, email, role});
+            updateTeamTable();
+
+            // DISPARAR NOTIFICAÇÃO AUTOMÁTICA POR E-MAIL AO PARTICIPANTE
+            const subject = encodeURIComponent("Acesso Autorizado - Ecossistema FoodPulse (Casa do Food Marketing)");
+            const body = encodeURIComponent(`Olá ${name},\n\nO seu acesso ao Ecossistema FoodPulse da Casa do Food Marketing foi autorizado com sucesso!\n\nÁrea Atribuída: ${role}\nE-mail Google Vinculado: ${email}\n\nPode aceder agora ao painel operacional e iniciar as suas atividades.\n\nAtenciosamente,\nJônatas Conceição - Gestão Master`);
+            
+            window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
+
+            document.getElementById('member-name').value = '';
+            document.getElementById('member-email').value = '';
+        }
+
+        function updateTeamTable() {
+            const tbody = document.getElementById('team-table-body');
+            document.getElementById('team-counter').innerText = `${teamMembers.length + 1} / 10 Membros`;
+            
+            let html = `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white flex items-center gap-2"><i class="fa-solid fa-crown text-amber-400"></i> Jônatas Conceição (Líder / Owner)</td>
+                    <td class="p-3 text-slate-400">jonatasfrota3@gmail.com</td>
+                    <td class="p-3"><span class="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-1 rounded-full font-semibold">Administrador Master</span></td>
+                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Enviado</span></td>
+                    <td class="p-3 text-right text-slate-500">Master</td>
+                </tr>
+            `;
+            html += teamMembers.map((m, idx) => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white">${m.name}</td>
+                    <td class="p-3 text-slate-400">${m.email}</td>
+                    <td class="p-3"><span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full">${m.role}</span></td>
+                    <td class="p-3"><span class="text-xs bg-emerald-500/10 text-emerald-400 px-2.5 py-1 rounded-full">Notificação Enviada</span></td>
+                    <td class="p-3 text-right"><button onclick="removeMember(${idx})" class="text-xs text-red-400 hover:text-red-300">Remover</button></td>
+                </tr>
+            `).join('');
+            tbody.innerHTML = html;
+        }
+        function removeMember(idx) {
+            teamMembers.splice(idx, 1);
+            updateTeamTable();
+        }
+
+        function calculateCMV() {
+            const item = document.getElementById('cmv-item').value;
+            const cost = parseFloat(document.getElementById('cmv-cost').value);
+            const target = parseFloat(document.getElementById('cmv-target').value);
+            if(!item || isNaN(cost) || isNaN(target)) return;
+            const price = cost / (target / 100);
+            const margin = ((price - cost) / price) * 100;
+            document.getElementById('res-price').innerText = `R$ ${price.toFixed(2)}`;
+            document.getElementById('res-margin').innerText = `${margin.toFixed(1)}%`;
+            document.getElementById('cmv-result').classList.remove('hidden');
+        }
+
+        let nfeList = [];
+        function addNFe() {
+            const fornecedor = document.getElementById('nfe-fornecedor').value;
+            const valor = parseFloat(document.getElementById('nfe-valor').value);
+            if(!fornecedor || isNaN(valor)) {
+                alert('Preencha o fornecedor e o valor da nota fiscal.');
+                return;
+            }
+            nfeList.push({fornecedor, valor, data: new Date().toLocaleDateString('pt-BR')});
+            updateNFeTable();
+            document.getElementById('nfe-fornecedor').value = '';
+            document.getElementById('nfe-valor').value = '';
+        }
+        function updateNFeTable() {
+            const tbody = document.getElementById('nfe-table-body');
+            if(nfeList.length === 0) return;
+            tbody.innerHTML = nfeList.map(n => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white">${n.fornecedor}</td>
+                    <td class="p-3 text-emerald-400">R$ ${n.valor.toFixed(2)}</td>
+                    <td class="p-3 text-slate-400">${n.data}</td>
+                </tr>
+            `).join('');
+        }
+
+        let employees = [];
+        function addEmployee() {
+            const name = document.getElementById('emp-name').value;
+            const faltas = parseInt(document.getElementById('emp-faltas').value);
+            if(!name || isNaN(faltas)) return;
+            employees.push({name, faltas});
+            employees.sort((a,b) => a.faltas - b.faltas);
+            updatePontoTable();
+            document.getElementById('emp-name').value = '';
+            document.getElementById('emp-faltas').value = '';
+        }
+        function updatePontoTable() {
+            const tbody = document.getElementById('ponto-table-body');
+            if(employees.length === 0) return;
+            tbody.innerHTML = employees.map((e, index) => `
+                <tr class="border-b border-slate-800/50">
+                    <td class="p-3 font-medium text-white flex items-center gap-2">
+                        ${index === 0 ? '<i class="fa-solid fa-medal text-amber-400"></i>' : ''} ${e.name}
+                    </td>
+                    <td class="p-3">${e.faltas} falta(s)</td>
+                    <td class="p-3"><span class="text-xs px-2.5 py-1 rounded-full ${e.faltas === 0 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-400'}">${e.faltas === 0 ? 'Assiduidade Perfeita' : 'Regular'}</span></td>
+                </tr>
+            `).join('');
+            const best = employees[0];
+            document.getElementById('best-employee-text').innerText = `${best.name} lidera a assiduidade com apenas ${best.faltas} falta(s) no mês!`;
+            document.getElementById('best-employee-banner').classList.remove('hidden');
+        }
+
+        function generateWhatsAppReport() {
+            const texto = `*RELATÓRIO DE TRÁFEGO - CASA DO FOOD MARKETING*%0A%0ACampanha concluída com sucesso! Desempenho excepcional em engajamento com CTR de *5,24%* e custo por resultado de *R$ 0,09*.%0A%0A_Atenção: Limite de orçamento quase esgotado (R$ 8.505,78 gastos)._`;
+            window.open(`https://api.whatsapp.com/send?text=${texto}`, '_blank');
+        }
+    </script>
+</body>
+</html>
+
+            <!-- TAB: TRÁFEGO ADS & WHATSAPP -->
+            <div id="tab-ads" class="tab-content space-y-6">
+                <div class="bg-cardBg p-6 rounded-2xl border border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold
